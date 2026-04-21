@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>土石流防災與避難平台 (原型)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Top Bar -->
+        <!-- Tribal Pattern Border -->
+        <div class="tribal-pattern-border"></div>
+        <header class="top-bar">
+            <h1>防災避難平台</h1>
+            <button id="lang-btn" class="lang-btn" onclick="toggleLanguage()"><i class="fa-solid fa-globe"></i> 中文</button>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            
+            <!-- TAB 1: Home (警示與報平安) -->
+            <section id="tab-home" class="tab-pane active">
+                <div class="alert-box red-alert">
+                    <i class="fa-solid fa-triangle-exclamation alert-icon"></i>
+                    <h2 class="trans-alert-title">紅色警戒區</h2>
+                    <p class="trans-alert-desc">觀測雨量已達土石流紅色警戒值，請依指示即刻往高處或避難所撤離！</p>
+                    <button class="voice-btn" onclick="playVoiceWarning()">
+                        <i class="fa-solid fa-volume-high"></i> <span class="trans-play-voice">播放緊急語音廣播</span>
+                    </button>
+                </div>
+
+                <div class="action-card">
+                    <h3 class="trans-report-title">安全回報與求救</h3>
+                    <p class="trans-report-desc">若您已經在安全的地方，或受困需要救援，請發送您的位置。</p>
+                    <button class="primary-btn green-btn" onclick="reportLocation()">
+                        <i class="fa-solid fa-location-dot"></i> <span class="trans-report-btn">📍 發送目前位置報平安</span>
+                    </button>
+                    <div id="location-success" class="success-msg hidden">
+                        <i class="fa-solid fa-circle-check"></i> <span class="trans-report-success">已成功發送您的位置：24.151, 120.641 (台中市)。防災中心已收到您的報平安！</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: Map (避難地圖) -->
+            <section id="tab-map" class="tab-pane">
+                <div class="search-box">
+                    <input type="text" class="search-input trans-search-placeholder" placeholder="🔍 搜尋附近避難所或集集點名稱...">
+                    <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                <div class="map-container">
+                    <!-- 模擬地圖 (使用圖片或 iframe) -->
+                    <div class="mock-map">
+                        <div class="mock-route"></div>
+                        <div class="mock-marker current"><i class="fa-solid fa-person"></i> 您在這裡</div>
+                        <div class="mock-marker shelter"><i class="fa-solid fa-house-medical"></i> 大武壠活動中心</div>
+                    </div>
+                </div>
+                <div class="route-info">
+                    <h3 class="trans-route-title">建議撤離路線</h3>
+                    <p class="trans-route-desc">請沿著勢高處行走，距離最近避難所 850 公尺，步行約 12 分鐘。</p>
+                </div>
+            </section>
+
+            <!-- TAB 3: Contact (聯絡家人) -->
+            <section id="tab-contact" class="tab-pane">
+                <div class="contact-header">
+                    <h2 class="trans-contact-title">緊急聯絡與求救電話</h2>
+                    <p class="trans-contact-desc">點擊以下按鈕將直接使用您的手機撥打。</p>
+                </div>
+                <div class="contact-grid">
+                    <a href="tel:119" class="contact-btn danger">
+                        <i class="fa-solid fa-truck-medical"></i>
+                        <span>119 救護 / 消防</span>
+                    </a>
+                    <a href="tel:110" class="contact-btn danger">
+                        <i class="fa-solid fa-building-shield"></i>
+                        <span>110 警察</span>
+                    </a>
+                    <a href="tel:1919" class="contact-btn warning">
+                        <i class="fa-solid fa-phone-volume"></i>
+                        <span>1919 急難救助</span>
+                    </a>
+                    <!-- 模擬聯絡家人 -->
+                    <a href="tel:0912345678" class="contact-btn family">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span class="trans-family-btn">👨‍👩‍👧 撥打給緊急聯絡人 (家人)</span>
+                    </a>
+                    <a href="sms:0912345678?body=我已經安全撤離到了避難所，請放心！" class="contact-btn sms">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span class="trans-sms-btn">✉️ 發送已安全簡訊</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- TAB 4: Memories (記憶角落) -->
+            <section id="tab-memories" class="tab-pane">
+                <div class="memory-header">
+                    <h2 class="trans-memory-title">記憶角落與災防宣導</h2>
+                    <p class="trans-memory-desc">這片土地的故事與我們共同守護的心</p>
+                </div>
+                
+                <div class="gallery">
+                    <div class="memory-card">
+                        <div class="memory-img" style="background-color: #1F2937">
+                            <i class="fa-solid fa-image" style="font-size: 3rem; color: #4B5563"></i>
+                        </div>
+                        <div class="memory-text">
+                            <h4>八八風災互助回顧</h4>
+                            <p>大武壠族長者們分享過去在災區互助與重建的珍貴畫面，提醒年輕一輩水患的可怕與團結的力量。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="memory-card">
+                        <div class="memory-img" style="background-color: #1F2937">
+                            <i class="fa-solid fa-image" style="font-size: 3rem; color: #4B5563"></i>
+                        </div>
+                        <div class="memory-text">
+                            <h4>大武壠繡花工坊的韌性</h4>
+                            <p>將美好的紅黃白藍編織進我們的生活。災後復育的十字繡課程，找回族群的色彩。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="switchTab('home', this)">
+                <i class="fa-solid fa-house"></i>
+                <span class="trans-nav-home">首頁</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('map', this)">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <span class="trans-nav-map">避難</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('contact', this)">
+                <i class="fa-solid fa-phone"></i>
+                <span class="trans-nav-contact">聯絡</span>
+            </button>
+            <button class="nav-item" onclick="switchTab('memories', this)">
+                <i class="fa-solid fa-book-journal-whills"></i>
+                <span class="trans-nav-memory">記憶</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
